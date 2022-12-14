@@ -1,49 +1,47 @@
 # developed by strelnikov87
-field_top_numbers = '  |' + ' | '.join('123456') + '|'
-field = [['|O|'] * 6 for i in range(6)]
+import classes as clss
 
 
-class MyException(Exception):
-    pass
+# def show_field():
+#     for k, v in enumerate(field):
+#         print(k + 1, *v)
+
+def welcome_to_the_game():
+    print('Welcome to the WarShip game!')
+    print('Enter: x y')
+    print('x - row number')
+    print('y - column number')
 
 
-class Dot:
-    def __init__(self, x: int, y: int):
-        self.x = x
-        self.y = y
+def start_game():
+    user_move = True
+    while True:
+        print('*' * 27)
+        print('User board:')
+        print(game.user.board)
+        print('*' * 27)
+        print('PC board: ')
+        print(game.ai.board)
+        print('*' * 27)
+        if user_move:
+            print('User move!')
+            game.user.move()
+            user_move = False
+        else:
+            print('PC move!')
+            game.ai.move()
+            user_move = True
 
-    def __eq__(self, other):
-        return self.x == other.x and self.y == other.y
+        if game.ai.board.count == len(game.ai.board.ships):
+            print('*' * 27)
+            print('User won!!!')
+            break
 
-    def __repr__(self):
-        return f'Dot({self.x, self.y})'
+        if game.user.board.count == len(game.user.board.ships):
+            print('*' * 27)
+            print('PC won!!!')
+            break
 
-class Ship:
-    def __init__(self, coord_1:int, coord_2:int):
-        self._coord_1 = coord_1
-        self._coord_2 = coord_2
-        self._health = 100
-
-
-    @property
-    def health(self):
-        return self._health
-
-    @health.setter
-    def health(self, new_health):
-        self._health = new_health
-
-    @property
-    def coords(self):
-        return self._coord_1, self._coord_2
-
-def show_field():
-    print(field_top_numbers)
-    for k, v in enumerate(field):
-        print(k + 1, *v)
-
-show_field()
-ship_1 = Ship(3, 1)
-print(ship_1.health)
-ship_1.health = 50
-print(ship_1.health)
+game = clss.Game()
+welcome_to_the_game()
+start_game()
